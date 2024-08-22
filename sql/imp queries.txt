@@ -1,0 +1,16 @@
+
+
+
+
+for displaying  a names if there is any special characters
+
+SQL> select ename from emp where ename like '%!%%' escape '!';
+
+ENAME
+----------
+%yamini
+
+SQL>
+
+
+

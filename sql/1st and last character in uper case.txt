@@ -1,0 +1,20 @@
+SQL> select initcap(substr(ename,1,length(ename)-1))||initcap(substr(ename,length(ename))) from emp;
+
+INITCAP(SUBSTR(ENAME
+--------------------
+JoneS
+MartiN
+BlakE
+ClarK
+ScotT
+KinG
+TurneR
+AdamS
+JameS
+ForD
+MilleR
+
+11 rows selected.
+
+SQL>
+

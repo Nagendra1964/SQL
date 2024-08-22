@@ -1,0 +1,242 @@
+> select * from emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7839 KING       PRESIDENT            17-NOV-81       5000                    10
+      7844 TURNER     SALESMAN        7698 08-SEP-81       1500          0         30
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+14 rows selected.
+
+SQL> select * from dept;
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        10 ACCOUNTING     NEW YORK
+        20 RESEARCH       DALLAS
+        30 SALES          CHICAGO
+        40 OPERATIONS     BOSTON
+
+SQL> select dname
+  2  from dept
+  3  where deptno=(select deptno
+  4  from emp
+  5  where ename='MILLER');
+
+DNAME
+--------------
+ACCOUNTING
+
+SQL> SELECT LOC
+  2  FROM DEPT
+  3  WHERE DEPTNO=(SELECT DEPTNO
+  4  FROM EMP
+  5  WHERE ENAME='ADAMS');
+
+LOC
+-------------
+DALLAS
+
+SQL> SELECT ENAME
+  2  FROM EMP
+  3  WHERE DEPTNO=(SELECT DEPTNO
+  4  FROM DEPT
+  5  WHERE LOC='NEW YARK');
+
+no rows selected
+
+SQL> SELECT ENAME
+  2  FROM EMP
+  3  WHERE DEPTNO=(SELECT DEPTNO
+  4  FROM DEPT
+  5  WHERE LOC='NEW YORK');
+
+ENAME
+----------
+CLARK
+KING
+MILLER
+
+SQL> SELECT COUNT(*)
+  2  FROMEMP
+  3  WHERE DEPTNO=(SELECT DEPTNO
+  4  FROM ;
+WHERE DEPTNO=(SELECT DEPTNO
+*
+ERROR at line 3:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> SELECT COUNT(*)
+  2  FROM EMP
+  3  WHERE DEPTNO=(SELECT DEPTNO
+  4  FROM DEPT
+  5  WHERE JOB='RESEARCH');
+
+  COUNT(*)
+----------
+         0
+
+SQL> SELECT COUNT(*)
+  2  FROM EMP
+  3  WHERE DEPTNO=(SELECT DEPTNO
+  4  FROM DEPT
+  5  WHERE DNAME='RESEARCH');
+
+  COUNT(*)
+----------
+         5
+
+SQL> SELECT ENAME,SAL
+  2  FROM EMP
+  3  WHERE DEPTNO=(SELECT DEPTNO
+  4  FROM DEPT
+  5  WHERE SAL>(SELECT SAL
+  6  FROM EMP
+  7  WHERE ENAME='SCOTT') AND DEPTNO=20;
+WHERE DEPTNO=(SELECT DEPTNO
+              *
+ERROR at line 3:
+ORA-00921: unexpected end of SQL command
+
+
+SQL> SELECT ENAME,SAL
+  2  FROM EMP
+  3  WHERE SAL>(SELECT SAL
+  4  FROM EMP
+  5  WHERE ENAME='SCOTT');
+
+ENAME             SAL
+---------- ----------
+KING             5000
+
+SQL> SELECT ENAME,SAL
+  2  FROM EMP
+  3  WHERE SAL>(SELECT SAL
+  4  FROM EMP
+  5  WHERE ENAME='SCOTT') AND DEPTNO=20;
+
+no rows selected
+
+SQL> SELECT * FROM EMP
+  2  WHERE JOB='MANAGER AND DEPTNO=(SELECT DEPTNO
+  3  FROM DEPT
+  4  WHERE DNAME='ACCOUNTING');
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> SELECT * FROM EMP
+  2  WHERE JOB='MANAGER AND DEPTNO=(SELECT DEPTNO
+  3  FROM DEPT
+  4  WHERE  DNAME='ACCOUNTING');
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> SELECT * FROM EMP
+  2  WHERE JOB='MANAGER' AND DEPTNO=(SELECT DEPTNO
+  3  FROM DEPT
+  4  WHERE  DNAME='ACCOUNTING');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+
+SQL> SELECT * FROM EMP
+  2  WHERE JOB=(SELECT JOB FROM EMP
+  3  WHERE ENAME='MILLER'
+  4  ) AND DEPTNO=(SELECT DEPTNO
+  5  FROM DEPT
+  6  WHERE LOC='NEW YORK');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7934 MILLER     CLERK           7782 23-JAN-82       1300                    10
+
+SQL> SELECT COUNT(*)
+  2  FROM EMP
+  3  WHERE JOB='CLERK' AND DEPTNO=(SELECT DEPTNO
+  4  FROM EMP
+  5  WHERE ENAME='SMITH') AND SAL>(SELECT SAL
+  6  FROM EMP
+  7  WHERE ENAME='KING') AND HIREDATE>(SELECT HIREDATE
+  8  FROM EMP
+  9  WHERE ENAME='MARTIN') AND LOC=(SELECT LOC
+ 10  FROM DEPT
+ 11  WHERE LOC='BOSTON');
+WHERE ENAME='MARTIN') AND LOC=(SELECT LOC
+                          *
+ERROR at line 9:
+ORA-00904: "LOC": invalid identifier
+
+
+SQL> SELECT COUNT(*)
+  2  FROM EMP
+  3  WHERE JOB='CLERK' AND DEPTNO=(SELECT DEPTNO
+  4  FROM EMP
+  5  WHERE ENAME='SMITH') AND SAL>(SELECT SAL
+  6  FROM EMP
+  7  WHERE ENAME='KING') AND HIREDATE>(SELECT HIREDATE
+  8  FROM EMP
+  9  WHERE ENAME='MARTIN') AND DEPTNO(SELECT DEPTNO
+ 10  FROM DEPT
+ 11  WHERE LOC='BOSTON');
+WHERE ENAME='MARTIN') AND DEPTNO(SELECT DEPTNO
+                                 *
+ERROR at line 9:
+ORA-00936: missing expression
+
+
+SQL> SELECT COUNT(*)
+  2  FROM EMP
+  3  WHERE JOB='CLERK' AND DEPTNO=(SELECT DEPTNO
+  4  FROM EMP
+  5  WHERE ENAME='SMITH') AND SAL>(SELECT SAL
+  6  FROM EMP
+  7  WHERE ENAME='KING') AND HIREDATE>(SELECT HIREDATE
+  8  FROM EMP
+  9  WHERE ENAME='MARTIN') AND DEPTNO=(SELECT DEPTNO
+ 10  FROM DEPT
+ 11  WHERE LOC='BOSTON');
+
+  COUNT(*)
+----------
+         0
+
+SQL> SELECT MAX(SAL)
+  2  FROM EMP
+  3  WHERE DEPTNO=(SELECT DEPTNO
+  4  FROM DEPT
+  5  WHERE LOC='DALLAS');
+
+  MAX(SAL)
+----------
+      3000
+
+SQL>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

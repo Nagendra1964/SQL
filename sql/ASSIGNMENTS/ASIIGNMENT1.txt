@@ -1,0 +1,328 @@
+SQL> select ename from emp where mgr in (select empno from emp where ename='SMITH');
+
+no rows selected
+
+SQL> select ename from emp where mgr in (select empno from emp WHERE MGR IN(SELECT EMPNO FROM EMP where ename='SMITH'));
+
+no rows selected
+
+SQL> select ename from emp where mgr in (select empno from emp WHERE MGR IN(SELECT EMPNO FROM EMP where ename='ADAMS'));
+
+no rows selected
+
+SQL> SELECT DNAME FROM DEPT WHERE DEPTNO(SELECT DEPTNO FROM EMP WHERE EMPNO IN(SELECT MGR FROM EMP WHERE ENAME='JONES'));
+SELECT DNAME FROM DEPT WHERE DEPTNO(SELECT DEPTNO FROM EMP WHERE EMPNO IN(SELECT MGR FROM EMP WHERE ENAME='JONES'))
+                                    *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> SELECT DNAME FROM DEPT WHERE DEPTNO IN(SELECT DEPTNO FROM EMP WHERE EMPNO IN(SELECT MGR FROM EMP WHERE ENAME='JONES'));
+
+DNAME
+--------------
+ACCOUNTING
+
+SQL> SELCET SAL FROM EMP WHERE EMPNO IN(SELECT MGR FROM EMP WHERE ENAME='MILLERS');
+SP2-0734: unknown command beginning "SELCET SAL..." - rest of line ignored.
+SQL>SQL> select sal from emp where empno in(select mgr from emp where ename='MILLER');
+
+       SAL
+----------
+      2450
+
+SQL> SELECT LOC FROM DEPT WHERE EMPNO IN(SELECT EMPNO FROM EMP WHERE EMPNO IN(SELECT MGR FROM EMP WHERE  EMPNO IN(SELECT MGR FROM EMP WHERE ENAME='SMITH')));
+SELECT LOC FROM DEPT WHERE EMPNO IN(SELECT EMPNO FROM EMP WHERE EMPNO IN(SELECT MGR FROM EMP WHERE  EMPNO IN(SELECT MGR FROM EMP WHERE ENAME='SMITH')))
+                           *
+ERROR at line 1:
+ORA-00904: "EMPNO": invalid identifier
+
+
+SQL> SELECT LOC FROM DEPT WHERE EMPNO IN(SELECT EMPNO FROM EMP WHERE EMPNO IN(SELECT MGR FROM EMP WHERE  EMPNO IN(SELECT MGR FROM EMP WHERE ENAME='SMITH')));
+SELECT LOC FROM DEPT WHERE EMPNO IN(SELECT EMPNO FROM EMP WHERE EMPNO IN(SELECT MGR FROM EMP WHERE  EMPNO IN(SELECT MGR FROM EMP WHERE ENAME='SMITH')))
+                           *
+ERROR at line 1:
+ORA-00904: "EMPNO": invalid identifier
+
+
+SQL> SELECT LOC FROM DEPT WHERE DEPTNO IN(SELECT DEPTNO FROM EMP WHERE EMPNO IN(SELECT MGR FROM EMP WHERE  EMPNO IN(SELECT MGR FROM EMP WHERE ENAME='SMITH')));
+
+LOC
+-------------
+DALLAS
+
+SQL> select ENAME from emp where empno in(select mgr from emp where ename='BLAKE');
+
+ENAME
+----------
+KING
+
+SQL> select ENAME from emp where MGR in(select EMP from emp where ename='BLAKE');
+select ENAME from emp where MGR in(select EMP from emp where ename='BLAKE')
+                                          *
+ERROR at line 1:
+ORA-00904: "EMP": invalid identifier
+
+
+SQL> select ENAME from emp where MGR in(select EMPNO from emp where ename='BLAKE');
+
+ENAME
+----------
+TURNER
+ALLEN
+WARD
+JAMES
+MARTIN
+
+SQL> select COUNT(*) from emp where MGR in(select EMPNO from emp where ename='JONES');
+
+  COUNT(*)
+----------
+         2
+
+SQL> select COUNT(*) from emp where MGR in(select EMPNO from emp where ename='KING');
+
+  COUNT(*)
+----------
+         3
+
+SQL> select COUN * from emp where MGR in(select EMPNO from emp where ename='JONES');
+select COUN * from emp where MGR in(select EMPNO from emp where ename='JONES')
+              *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select COUNT * from emp where MGR in(select EMPNO from emp where ename='KING');
+select COUNT * from emp where MGR in(select EMPNO from emp where ename='KING')
+               *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select  * from emp where MGR in(select EMPNO from emp where ename='KING');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30
+      7566 JONES      MANAGER         7839 02-APR-81       2975                    20
+      7782 CLARK      MANAGER         7839 09-JUN-81       2450                    10
+
+SQL> select  * from emp where MGR in(select EMPNO from emp where ename='JONES');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+
+SQL> SELECT LOC FROM DEPT WHERE DEPTNO IN(SELECT DEPTNO FROM EMP WHERE EMPNO IN(SELECT MGR FROM EMP WHERE  EMPNO IN(SELECT MGR FROM EMP WHERE ENAME='SMITH')));
+
+LOC
+-------------
+DALLAS
+
+SQL> SELECT ENAME FROM EMP WHERE MGR IN(SELECT EMPNO FROM EMP WHERE MGR IN(SELECT EMPNO FROM EMP WHERE ENAME='BLAKES'));
+
+no rows selected
+
+SQL> SELECT ENAME FROM EMP WHERE MGR IN(SELECT EMPNO  FROM EMP WHERE ENAME='BLAKES'));
+SELECT ENAME FROM EMP WHERE MGR IN(SELECT EMPNO  FROM EMP WHERE ENAME='BLAKES'))
+                                                                               *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> SELECT ENAME FROM EMP WHERE MGR IN(SELECT EMPNO  FROM EMP WHERE ENAME='BLAKES');
+
+no rows selected
+
+SQL> SELECT ENAME FROM EMP WHERE MGR IN(SELECT EMPNO FROM EMP WHERE EMPNO IN(SELECT MGR FROM EMP WHERE ENAME='BLAKES'));
+
+no rows selected
+
+SQL> SELECT ENAME FROM EMP WHERE MGR IN(SELECT EMPNO FROM EMP WHERE EMPNO(SELECT MGR FROM EMP WHERE ENAME='BLAKES'));
+SELECT ENAME FROM EMP WHERE MGR IN(SELECT EMPNO FROM EMP WHERE EMPNO(SELECT MGR FROM EMP WHERE ENAME='BLAKES'))
+                                                                     *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> SELECT ENAME FROM EMP WHERE MGR IN(SELECT EMPNO FROM EMP) WHERE EMPNO(SELECT MGR FROM EMP WHERE ENAME='BLAKES');
+SELECT ENAME FROM EMP WHERE MGR IN(SELECT EMPNO FROM EMP) WHERE EMPNO(SELECT MGR FROM EMP WHERE ENAME='BLAKES')
+                                                          *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> SELECT ENAME FROM EMP WHERE MGR IN(SELECT EMPNO FROM EMP WHERE EMPNO(SELECT MGR FROM EMP WHERE ENAME='BLAKES'));
+SELECT ENAME FROM EMP WHERE MGR IN(SELECT EMPNO FROM EMP WHERE EMPNO(SELECT MGR FROM EMP WHERE ENAME='BLAKES'))
+                                                                     *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> SELECT ENAME FROM EMP WHERE EMPNO IN(SELECT MGR FROM EMP WHERE MGR(SELECT EMPNO FROM EMP WHERE ENAME='BLAKES'));
+SELECT ENAME FROM EMP WHERE EMPNO IN(SELECT MGR FROM EMP WHERE MGR(SELECT EMPNO FROM EMP WHERE ENAME='BLAKES'))
+                                                                   *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> SELECT ENAME FROM EMP WHERE MGR IN(SELECT EMPNO FROM EMP WHERE MGR IN(SELECT EMPNO FROM EMP WHERE ENAME='BLAKES'));
+
+no rows selected
+
+SQL> SELECT LOC FROM DEPT WHERE DEPTNO IN(SELECT DEPTNO FROM EMP WHERE EMPNO IN(SELECT MGR FROM EMP WHERE  EMPNO IN(SELECT MGR FROM EMP WHERE ENAME='SMITH')));
+
+LOC
+-------------
+DALLAS
+
+SQL> SELECT ENAME FROM EMP WHERE EMPNO IN(SELECT MGR FROM EMP WHERE  MGR IN(SELECT EMPNO FROM EMP WHERE ENAME='BLAKES'));
+
+no rows selected
+
+SQL> SELECT ENAME FROM EMP WHERE MGR(SELECT EMPNO FROM EMP WHERE ENAME='BLAKES');
+SELECT ENAME FROM EMP WHERE MGR(SELECT EMPNO FROM EMP WHERE ENAME='BLAKES')
+                                *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> SELECT ENAME FROM EMP WHERE MGR IN(SELECT EMPNO FROM EMP WHERE ENAME='BLAKES');
+
+no rows selected
+
+SQL> SELECT COUNT(*) FROM EMP WHERE MGR IN(SELECT EMPNO FROM EMP WHERE EMPNO IN(SELECT MGR FROM EMP WHERE ENAME='FORDS'));
+
+  COUNT(*)
+----------
+         0
+
+SQL> SELECT COUNT(*) FROM EMP WHERE MGR IN(SELECT EMPNO FROM EMP WHERE EMPNO IN(SELECT MGR FROM EMP WHERE ENAME='FORD'));
+
+  COUNT(*)
+----------
+         2
+
+SQL> SELECT ENAME,EMPNO,MGR FROM EMP WHERE MGR IN(SELECT EMPNO FROM EMP WHERE EMPNO IN(SELECT MGR FROM EMP WHERE ENAME='FORD'));
+
+ENAME           EMPNO        MGR
+---------- ---------- ----------
+FORD             7902       7566
+SCOTT            7788       7566
+
+SQL> SELECT * FROM WHERE ENAME IN('FROD','SCOTT');
+SELECT * FROM WHERE ENAME IN('FROD','SCOTT')
+              *
+ERROR at line 1:
+ORA-00903: invalid table name
+
+
+SQL> SELECT * FROM EMP WHERE ENAME IN('FROD','SCOTT');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+
+SQL> SELECT * FROM EMP WHERE ENAME IN('FROD','SCOTT');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+
+SQL> SELECT * FROM EMP WHERE ENAME IN('FROD');
+
+no rows selected
+
+SQL> SELECT * FROM EMP WHERE ENAME IN('FORD','SCOTT');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20
+
+SQL>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,139 @@
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+ACC_TYPE                       TABLE
+ACC_TYPE1                      TABLE
+BONUS                          TABLE
+B_BRANCH                       TABLE
+B_CUST                         TABLE
+B_EMP                          TABLE
+CHOC                           TABLE
+CUST                           TABLE
+DEPT                           TABLE
+EMP                            TABLE
+PRODUCT                        TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+SALGRADE                       TABLE
+TRANSACTION                    TABLE
+
+13 rows selected.
+
+SQL> set lines 100 pages 100;
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+ACC_TYPE                       TABLE
+ACC_TYPE1                      TABLE
+BONUS                          TABLE
+B_BRANCH                       TABLE
+B_CUST                         TABLE
+B_EMP                          TABLE
+CHOC                           TABLE
+CUST                           TABLE
+DEPT                           TABLE
+EMP                            TABLE
+PRODUCT                        TABLE
+SALGRADE                       TABLE
+TRANSACTION                    TABLE
+
+13 rows selected.
+
+SQL> alter table department;
+alter table department
+                     *
+ERROR at line 1:
+ORA-02210: no options specified for ALTER TABLE
+
+
+SQL> rename dept to department;
+
+Table renamed.
+
+SQL> alter table department rename column loc to location;
+
+Table altered.
+
+SQL> alter table department modify location varchar(50);
+
+Table altered.
+
+SQL> alter table department rename dname to dept_name;
+alter table department rename dname to dept_name
+                              *
+ERROR at line 1:
+ORA-14155: missing PARTITION or SUBPARTITION keyword
+
+
+SQL> alter table department rename column  dname to dept_name;
+
+Table altered.
+
+SQL> alter table department modify location not null;
+
+Table altered.
+
+SQL>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

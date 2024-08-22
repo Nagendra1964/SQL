@@ -1,0 +1,11 @@
+SQL> select * from emp where hiredate in(select min(hiredate) from emp where hiredate>(select min(hiredate) from emp));
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------
+      7499 ALLEN      SALESMAN        7698 20-FEB-81       1600        300         30
+
+SQL> select ename from emp where hiredate=(select max(hiredate) from emp where hiredate<(select max(hiredate) from emp));
+
+ENAME
+----------
+SCOTT

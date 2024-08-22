@@ -1,0 +1,542 @@
+SQL> select e1.ename,e2.ename,loc from emp e1,emp e2,dept d1 where e1.mgr=e2.empno and e1.deptno=d1.deptno;
+
+ENAME      ENAME      LOC
+---------- ---------- -------------
+FORD       JONES      DALLAS
+SCOTT      JONES      DALLAS
+WARD       BLAKE      CHICAGO
+TURNER     BLAKE      CHICAGO
+MARTIN     BLAKE      CHICAGO
+ALLEN      BLAKE      CHICAGO
+JAMES      BLAKE      CHICAGO
+MILLER     CLARK      NEW YORK
+ADAMS      SCOTT      DALLAS
+BLAKE      KING       CHICAGO
+JONES      KING       DALLAS
+CLARK      KING       NEW YORK
+SMITH      FORD       DALLAS
+
+13 rows selected.
+
+SQL> select e1.ename,e2.ename from emp e1,empe2 where e1.mgr=e2.empno;
+select e1.ename,e2.ename from emp e1,empe2 where e1.mgr=e2.empno
+                                     *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select e1.ename,e2.ename from emp e1,emp e2 where e1.mgr=e2.empno;
+
+ENAME      ENAME
+---------- ----------
+FORD       JONES
+SCOTT      JONES
+TURNER     BLAKE
+ALLEN      BLAKE
+WARD       BLAKE
+JAMES      BLAKE
+MARTIN     BLAKE
+MILLER     CLARK
+ADAMS      SCOTT
+BLAKE      KING
+JONES      KING
+CLARK      KING
+SMITH      FORD
+
+13 rows selected.
+
+SQL> select e1.ename ,sal,e2.ename,e2.sal from emp e1,emp e2 where e1.mgr=e2.empno;
+select e1.ename ,sal,e2.ename,e2.sal from emp e1,emp e2 where e1.mgr=e2.empno
+                 *
+ERROR at line 1:
+ORA-00918: column ambiguously defined
+
+
+SQL> select e1.ename ,e1.sal,e2.ename,e2.sal from emp e1,emp e2 where e1.mgr=e2.empno;
+
+ENAME             SAL ENAME             SAL
+---------- ---------- ---------- ----------
+FORD             3000 JONES            2975
+SCOTT            3000 JONES            2975
+TURNER           1500 BLAKE            2850
+ALLEN            1600 BLAKE            2850
+WARD             1250 BLAKE            2850
+JAMES             950 BLAKE            2850
+MARTIN           1250 BLAKE            2850
+MILLER           1300 CLARK            2450
+ADAMS            1100 SCOTT            3000
+BLAKE            2850 KING             5000
+JONES            2975 KING             5000
+CLARK            2450 KING             5000
+SMITH             800 FORD             3000
+
+13 rows selected.
+
+SQL> select e1.ename,e2.ename,e1.deptno from emp e1,emp e2 where e1.mgr=e2.empno and e1.job='CLERK';
+
+ENAME      ENAME          DEPTNO
+---------- ---------- ----------
+JAMES      BLAKE              30
+MILLER     CLARK              10
+ADAMS      SCOTT              20
+SMITH      FORD               20
+
+SQL> SELECT E1.ENAME,E2.JOB FROM EMP E1,EMP E2 WHERE E2.JOB='ANALYST';
+
+ENAME      JOB
+---------- ---------
+SMITH      ANALYST
+ALLEN      ANALYST
+WARD       ANALYST
+JONES      ANALYST
+MARTIN     ANALYST
+BLAKE      ANALYST
+CLARK      ANALYST
+SCOTT      ANALYST
+KING       ANALYST
+TURNER     ANALYST
+ADAMS      ANALYST
+JAMES      ANALYST
+FORD       ANALYST
+MILLER     ANALYST
+SMITH      ANALYST
+ALLEN      ANALYST
+WARD       ANALYST
+JONES      ANALYST
+MARTIN     ANALYST
+BLAKE      ANALYST
+CLARK      ANALYST
+SCOTT      ANALYST
+KING       ANALYST
+TURNER     ANALYST
+ADAMS      ANALYST
+JAMES      ANALYST
+FORD       ANALYST
+MILLER     ANALYST
+
+28 rows selected.
+
+SQL> SELECT E1.ENAME,E2.JOB FROM EMP E1,EMP E2 WHERE E1.MGR=E2.EMPNO AND E2.JOB='ANALYST';
+
+ENAME      JOB
+---------- ---------
+ADAMS      ANALYST
+SMITH      ANALYST
+
+SQL> SELECT E1.ENAME,E2.ENAME,E2.JOB FROM EMP E1,EMP E2 WHERE E1.MGR=E2.EMPNO AND E1.JOB=E2.JOB;
+
+no rows selected
+
+SQL> SELECT E1.ENAME,E2.ENAME,E1.JOB FROM EMP E1,EMP E2 WHERE E1.MGR=E2.EMPNO AND E1.JOB=E2.JOB;
+
+no rows selected
+
+SQL>
+SQL>
+SQL>
+SQL> SELECT E1.ENAME,E1.SAL,E2.ENAME,E2.SAL FROM EMP E1,EMP E2 WHERE E1.MGR=E2.EMPNO WHERE E2.SAL>E1.SAL;
+SELECT E1.ENAME,E1.SAL,E2.ENAME,E2.SAL FROM EMP E1,EMP E2 WHERE E1.MGR=E2.EMPNO WHERE E2.SAL>E1.SAL
+                                                                                *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> SELECT E1.ENAME,E1.SAL,E2.ENAME,E2.SAL FROM EMP E1,EMP E2 WHERE E1.MGR=E2.EMPNO AND WHERE E2.SAL>E1.SAL;
+SELECT E1.ENAME,E1.SAL,E2.ENAME,E2.SAL FROM EMP E1,EMP E2 WHERE E1.MGR=E2.EMPNO AND WHERE E2.SAL>E1.SAL
+                                                                                    *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> SELECT E1.ENAME,E1.SAL,E2.ENAME,E2.SAL FROM EMP E1,EMP E2 WHERE E1.MGR=E2.EMPNO AND E2.SAL>E1.SAL;
+
+ENAME             SAL ENAME             SAL
+---------- ---------- ---------- ----------
+TURNER           1500 BLAKE            2850
+ALLEN            1600 BLAKE            2850
+WARD             1250 BLAKE            2850
+JAMES             950 BLAKE            2850
+MARTIN           1250 BLAKE            2850
+MILLER           1300 CLARK            2450
+ADAMS            1100 SCOTT            3000
+BLAKE            2850 KING             5000
+JONES            2975 KING             5000
+CLARK            2450 KING             5000
+SMITH             800 FORD             3000
+
+11 rows selected.
+
+SQL> SELECT E1.ENAME,E1.SAL,E2.ENAME,E2.SAL FROM EMP E1,EMP E2 WHERE E1.MGR=E2.EMPNO;
+
+ENAME             SAL ENAME             SAL
+---------- ---------- ---------- ----------
+FORD             3000 JONES            2975
+SCOTT            3000 JONES            2975
+TURNER           1500 BLAKE            2850
+ALLEN            1600 BLAKE            2850
+WARD             1250 BLAKE            2850
+JAMES             950 BLAKE            2850
+MARTIN           1250 BLAKE            2850
+MILLER           1300 CLARK            2450
+ADAMS            1100 SCOTT            3000
+BLAKE            2850 KING             5000
+JONES            2975 KING             5000
+CLARK            2450 KING             5000
+SMITH             800 FORD             3000
+
+13 rows selected.
+
+SQL> SELECT E1.ENAME,E1.SAL,E2.ENAME,E2.SAL FROM EMP E1,EMP E2 WHERE E1.MGR=E2.EMPNO AND E2.SAL>E1.SAL;
+
+ENAME             SAL ENAME             SAL
+---------- ---------- ---------- ----------
+TURNER           1500 BLAKE            2850
+ALLEN            1600 BLAKE            2850
+WARD             1250 BLAKE            2850
+JAMES             950 BLAKE            2850
+MARTIN           1250 BLAKE            2850
+MILLER           1300 CLARK            2450
+ADAMS            1100 SCOTT            3000
+BLAKE            2850 KING             5000
+JONES            2975 KING             5000
+CLARK            2450 KING             5000
+SMITH             800 FORD             3000
+
+11 rows selected.
+
+SQL> SELECT E1.ENAME,E2.ENAME,E2.COMM FROM EMP E1,EMP E2 WHERE E1.MGR=E2.EMPNO AND E2.COMM IS NOT NULL;
+
+no rows selected
+
+SQL>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

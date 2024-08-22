@@ -1,0 +1,96 @@
+SQL> select count(job),job from emp group by job having count(job)>=2;
+
+COUNT(JOB) JOB
+---------- ---------
+         4 CLERK
+         4 SALESMAN
+         3 MANAGER
+         2 ANALYST
+
+SQL> select count(ename),ename from emp group by ename having count(ename)>1;
+
+no rows selected
+
+SQL> select count(ename),ename from emp group by ename having count(ename)=2;
+
+no rows selected
+
+SQL> select count(sal),sal from emp group by sal having count(sal)>1;
+
+COUNT(SAL)        SAL
+---------- ----------
+         2       1250
+         2       3000
+
+SQL> select count(*),deptno from emp where ename like IN ('%A%' ,'%S%') group by DEPTNO WHERE COUNT(*)>=2;
+select count(*),deptno from emp where ename like IN ('%A%' ,'%S%') group by DEPTNO WHERE COUNT(*)>=2
+                                                 *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select count(*),deptno from emp where ename like '%A%' OR ENAME LIKE'%S%' group by DEPTNO WHERE COUNT(*)>=2;
+select count(*),deptno from emp where ename like '%A%' OR ENAME LIKE'%S%' group by DEPTNO WHERE COUNT(*)>=2
+                                                                                          *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select count(*),deptno from emp where ename like '%A%' OR ENAME LIKE'%S%' group by DEPTNO WHERE COUNT(*)>=2;
+select count(*),deptno from emp where ename like '%A%' OR ENAME LIKE'%S%' group by DEPTNO WHERE COUNT(*)>=2
+                                                                                          *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> SELECT JOB,SUM(SAL),JOB FROM EMP WHERE SUM(SAL)>3450 GROUP BY JOB;
+SELECT JOB,SUM(SAL),JOB FROM EMP WHERE SUM(SAL)>3450 GROUP BY JOB
+                                       *
+ERROR at line 1:
+ORA-00934: group function is not allowed here
+
+
+SQL> select count(*),deptno from emp where ename like '%A%' OR ENAME LIKE'%S%' GROUP BY DEPTNO HAVING COUNT(*)>=2;
+
+  COUNT(*)     DEPTNO
+---------- ----------
+         5         30
+         4         20
+
+SQL> SELECT JOB,SUM(SAL),JOB FROM EMP GROUP BY JOB HAVING SUM(SAL)>3450;
+
+JOB         SUM(SAL) JOB
+--------- ---------- ---------
+CLERK           4150 CLERK
+SALESMAN        5600 SALESMAN
+PRESIDENT       5000 PRESIDENT
+MANAGER         8275 MANAGER
+ANALYST         6000 ANALYST
+
+SQL> SELECT JOB,SUM(SAL) FROM EMP FROM EMP WHERE SAL>1500;
+SELECT JOB,SUM(SAL) FROM EMP FROM EMP WHERE SAL>1500
+                             *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> SELECT JOB,SUM(SAL) FROM EMP  WHERE SAL>1500 GROUP BY JOB;
+
+JOB         SUM(SAL)
+--------- ----------
+SALESMAN        1600
+PRESIDENT       5000
+MANAGER         8275
+ANALYST         6000
+
+SQL> SELECT MAX(SAL),JOB FROM EMP GROUP BY JOB HAVING MAX(SAL)>2000;
+
+  MAX(SAL) JOB
+---------- ---------
+      5000 PRESIDENT
+      2975 MANAGER
+      3000 ANALYST
+
+SQL>
+
+

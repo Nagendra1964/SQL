@@ -1,0 +1,416 @@
+SQL> select * from dept;
+
+    DEPTNO DNAME          LOC
+---------- -------------- -------------
+        10 ACCOUNTING     NEW YORK
+        20 RESEARCH       DALLAS
+        30 SALES          CHICAGO
+        40 OPERATIONS     BOSTON
+
+SQL> select ename,loc from emp,dept where emp.deptno=dept.deptno;
+
+ENAME      LOC
+---------- -------------
+CLARK      NEW YORK
+KING       NEW YORK
+MILLER     NEW YORK
+JONES      DALLAS
+FORD       DALLAS
+ADAMS      DALLAS
+SMITH      DALLAS
+SCOTT      DALLAS
+WARD       CHICAGO
+TURNER     CHICAGO
+ALLEN      CHICAGO
+JAMES      CHICAGO
+BLAKE      CHICAGO
+MARTIN     CHICAGO
+
+14 rows selected.
+
+SQL> select dname,sal from emp,dept where dname='ACCOUNTING';
+
+DNAME                 SAL
+-------------- ----------
+ACCOUNTING            800
+ACCOUNTING           1600
+ACCOUNTING           1250
+ACCOUNTING           2975
+ACCOUNTING           1250
+ACCOUNTING           2850
+ACCOUNTING           2450
+ACCOUNTING           3000
+ACCOUNTING           5000
+ACCOUNTING           1500
+ACCOUNTING           1100
+ACCOUNTING            950
+ACCOUNTING           3000
+ACCOUNTING           1300
+
+14 rows selected.
+
+SQL> SELECT DNAME,SAL*12 'ANNUAL_SAL' FROM EMP,DEPT WHERE EMP.DETNO=DEPT.DEPTNO WHERE SAL>2340;
+SELECT DNAME,SAL*12 'ANNUAL_SAL' FROM EMP,DEPT WHERE EMP.DETNO=DEPT.DEPTNO WHERE SAL>2340
+                    *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> SELECT DNAME,SAL*12 AS 'ANNUAL_SAL' FROM EMP,DEPT WHERE EMP.DETNO=DEPT.DEPTNO WHERE SAL>2340;
+SELECT DNAME,SAL*12 AS 'ANNUAL_SAL' FROM EMP,DEPT WHERE EMP.DETNO=DEPT.DEPTNO WHERE SAL>2340
+                       *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> SELECT DNAME,SAL*12 AS 'ANNUAL_SAL' FROM DEPT,EMP WHERE EMP.DETNO=DEPT.DEPTNO WHERE SAL>2340;
+SELECT DNAME,SAL*12 AS 'ANNUAL_SAL' FROM DEPT,EMP WHERE EMP.DETNO=DEPT.DEPTNO WHERE SAL>2340
+                       *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> SELECT DNAME,SAL*12  FROM DEPT,EMP WHERE EMP.DETNO=DEPT.DEPTNO WHERE SAL>2340;
+SELECT DNAME,SAL*12  FROM DEPT,EMP WHERE EMP.DETNO=DEPT.DEPTNO WHERE SAL>2340
+                                                               *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> SELECT DNAME,SAL*12  FROM DEPT,EMP WHERE EMP.DEPTNO=DEPT.DEPTNO WHERE SAL>2340;
+SELECT DNAME,SAL*12  FROM DEPT,EMP WHERE EMP.DEPTNO=DEPT.DEPTNO WHERE SAL>2340
+                                                                *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> SELECT ENAME,DNAME FROM EMP,DEPT WHERE DNAME LIKE '%A%';
+
+ENAME      DNAME
+---------- --------------
+SMITH      ACCOUNTING
+ALLEN      ACCOUNTING
+WARD       ACCOUNTING
+JONES      ACCOUNTING
+MARTIN     ACCOUNTING
+BLAKE      ACCOUNTING
+CLARK      ACCOUNTING
+SCOTT      ACCOUNTING
+KING       ACCOUNTING
+TURNER     ACCOUNTING
+ADAMS      ACCOUNTING
+JAMES      ACCOUNTING
+FORD       ACCOUNTING
+MILLER     ACCOUNTING
+SMITH      RESEARCH
+ALLEN      RESEARCH
+WARD       RESEARCH
+JONES      RESEARCH
+MARTIN     RESEARCH
+BLAKE      RESEARCH
+CLARK      RESEARCH
+SCOTT      RESEARCH
+KING       RESEARCH
+TURNER     RESEARCH
+ADAMS      RESEARCH
+JAMES      RESEARCH
+FORD       RESEARCH
+MILLER     RESEARCH
+SMITH      SALES
+ALLEN      SALES
+WARD       SALES
+JONES      SALES
+MARTIN     SALES
+BLAKE      SALES
+CLARK      SALES
+SCOTT      SALES
+KING       SALES
+TURNER     SALES
+ADAMS      SALES
+JAMES      SALES
+FORD       SALES
+MILLER     SALES
+SMITH      OPERATIONS
+ALLEN      OPERATIONS
+WARD       OPERATIONS
+JONES      OPERATIONS
+MARTIN     OPERATIONS
+BLAKE      OPERATIONS
+CLARK      OPERATIONS
+SCOTT      OPERATIONS
+KING       OPERATIONS
+TURNER     OPERATIONS
+ADAMS      OPERATIONS
+JAMES      OPERATIONS
+FORD       OPERATIONS
+MILLER     OPERATIONS
+
+56 rows selected.
+
+SQL> SELECT ENAME,DNAME FROM EMP,DEPT EMP.DEPTNO=DEPT.DEPTNO WHERE DNAME LIKE '%A%';
+SELECT ENAME,DNAME FROM EMP,DEPT EMP.DEPTNO=DEPT.DEPTNO WHERE DNAME LIKE '%A%'
+                                    *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select ename,loc from emp,dept where emp.deptno=dept.deptno;
+
+ENAME      LOC
+---------- -------------
+CLARK      NEW YORK
+KING       NEW YORK
+MILLER     NEW YORK
+JONES      DALLAS
+FORD       DALLAS
+ADAMS      DALLAS
+SMITH      DALLAS
+SCOTT      DALLAS
+WARD       CHICAGO
+TURNER     CHICAGO
+ALLEN      CHICAGO
+JAMES      CHICAGO
+BLAKE      CHICAGO
+MARTIN     CHICAGO
+
+14 rows selected.
+
+SQL> select ename,dname from emp,dept emp.deptno=dept.deptno where dname like '%A%';
+select ename,dname from emp,dept emp.deptno=dept.deptno where dname like '%A%'
+                                    *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select ename,loc from emp,dept where emp.deptno=dept.deptno;
+
+ENAME      LOC
+---------- -------------
+CLARK      NEW YORK
+KING       NEW YORK
+MILLER     NEW YORK
+JONES      DALLAS
+FORD       DALLAS
+ADAMS      DALLAS
+SMITH      DALLAS
+SCOTT      DALLAS
+WARD       CHICAGO
+TURNER     CHICAGO
+ALLEN      CHICAGO
+JAMES      CHICAGO
+BLAKE      CHICAGO
+MARTIN     CHICAGO
+
+14 rows selected.
+
+SQL> select ename,dname from emp,dept where emp.deptno=dept.deptno where dname like '%S%';
+select ename,dname from emp,dept where emp.deptno=dept.deptno where dname like '%S%'
+                                                              *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select ename,dname from emp,dept where emp.deptno=dept.deptno where dname like '%A%';
+select ename,dname from emp,dept where emp.deptno=dept.deptno where dname like '%A%'
+                                                              *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select dname,sal from emp,dept where dname='ACCOUNTING';
+
+DNAME                 SAL
+-------------- ----------
+ACCOUNTING            800
+ACCOUNTING           1600
+ACCOUNTING           1250
+ACCOUNTING           2975
+ACCOUNTING           1250
+ACCOUNTING           2850
+ACCOUNTING           2450
+ACCOUNTING           3000
+ACCOUNTING           5000
+ACCOUNTING           1500
+ACCOUNTING           1100
+ACCOUNTING            950
+ACCOUNTING           3000
+ACCOUNTING           1300
+
+14 rows selected.
+
+SQL> SELECT DNAME,SAL*12 'ANNUAL_SAL' FROM EMP,DEPT WHERE EMP.DETNO=DEPT.DEPTNO WHERE SAL>2340;
+SELECT DNAME,SAL*12 'ANNUAL_SAL' FROM EMP,DEPT WHERE EMP.DETNO=DEPT.DEPTNO WHERE SAL>2340
+                    *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> SELECT DNAME,SAL*12  FROM EMP,DEPT WHERE EMP.DETNO=DEPT.DEPTNO WHERE SAL>2340;
+SELECT DNAME,SAL*12  FROM EMP,DEPT WHERE EMP.DETNO=DEPT.DEPTNO WHERE SAL>2340
+                                                               *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> SELECT DNAME,SAL*12  FROM EMP,DEPT WHERE EMP.DETNO=DEPT.DEPTNO and SAL>2340;
+SELECT DNAME,SAL*12  FROM EMP,DEPT WHERE EMP.DETNO=DEPT.DEPTNO and SAL>2340
+                                         *
+ERROR at line 1:
+ORA-00904: "EMP"."DETNO": invalid identifier
+
+
+SQL> SELECT DNAME,SAL*12  FROM EMP,DEPT WHERE EMP.DEpTNO=DEPT.DEPTNO and SAL>2340;
+
+DNAME              SAL*12
+-------------- ----------
+ACCOUNTING          29400
+ACCOUNTING          60000
+RESEARCH            36000
+RESEARCH            36000
+RESEARCH            35700
+SALES               34200
+
+6 rows selected.
+
+SQL> SELECT DNAME,SAL*12  FROM EMP,DEPT WHERE EMP.DETNO=DEPT.DEPTNO and SAL>2340;
+SELECT DNAME,SAL*12  FROM EMP,DEPT WHERE EMP.DETNO=DEPT.DEPTNO and SAL>2340
+                                         *
+ERROR at line 1:
+ORA-00904: "EMP"."DETNO": invalid identifier
+
+
+SQL> SELECT DNAME,SAL*12  FROM EMP,DEPT WHERE EMP.DEpTNO=DEPT.DEPTNO and SAL>2340;
+
+DNAME              SAL*12
+-------------- ----------
+ACCOUNTING          29400
+ACCOUNTING          60000
+RESEARCH            36000
+RESEARCH            36000
+RESEARCH            35700
+SALES               34200
+
+6 rows selected.
+
+SQL> select ename,dname from emp,dept where emp.deptno=dept.deptno dname like '%A%';
+select ename,dname from emp,dept where emp.deptno=dept.deptno dname like '%A%'
+                                                              *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select ename,dname from emp,dept where emp.deptno=dept.deptno and dname like '%A%';
+
+ENAME      DNAME
+---------- --------------
+CLARK      ACCOUNTING
+KING       ACCOUNTING
+MILLER     ACCOUNTING
+JONES      RESEARCH
+FORD       RESEARCH
+ADAMS      RESEARCH
+SMITH      RESEARCH
+SCOTT      RESEARCH
+WARD       SALES
+TURNER     SALES
+ALLEN      SALES
+JAMES      SALES
+BLAKE      SALES
+MARTIN     SALES
+
+14 rows selected.
+
+SQL> select ename,dname from emp,dept where emp.deptno=dept.deptname and job='SALESMAN';
+select ename,dname from emp,dept where emp.deptno=dept.deptname and job='SALESMAN'
+                                                  *
+ERROR at line 1:
+ORA-00904: "DEPT"."DEPTNAME": invalid identifier
+
+
+SQL> select ename,dname from emp,dept where emp.deptno=dept.deptnO and job='SALESMAN';
+
+ENAME      DNAME
+---------- --------------
+ALLEN      SALES
+TURNER     SALES
+MARTIN     SALES
+WARD       SALES
+
+SQL> SELECT DNAME,JOB FROM EMP,DEPT WHERE EMP.DEPTNO=DEPT.DEPTNO AND JOB LIKE '%S%'AND DNAME LIKE '%S%';
+
+DNAME          JOB
+-------------- ---------
+SALES          SALESMAN
+SALES          SALESMAN
+SALES          SALESMAN
+RESEARCH       ANALYST
+SALES          SALESMAN
+RESEARCH       ANALYST
+
+6 rows selected.
+
+SQL> SELECT DNAME,HIREDATE FROM EMP WHERE EMP.DEPTNO=DEPT.DEPTNO AND HIREDATE>'01-JAN-83' AND DNAME IN('ACCOUNTING','RESEARCH');
+SELECT DNAME,HIREDATE FROM EMP WHERE EMP.DEPTNO=DEPT.DEPTNO AND HIREDATE>'01-JAN-83' AND DNAME IN('ACCOUNTING','RESEARCH')
+                                                                                         *
+ERROR at line 1:
+ORA-00904: "DNAME": invalid identifier
+
+
+SQL> SELECT DNAME,HIREDATE FROM EMP,DEPT WHERE EMP.DEPTNO=DEPT.DEPTNO AND HIREDATE>'01-JAN-83' AND DNAME IN('ACCOUNTING','RESEARCH');
+
+DNAME          HIREDATE
+-------------- ---------
+RESEARCH       23-MAY-87
+RESEARCH       19-APR-87
+
+SQL> SELECT  ENAME,DNAME FROM EMP,DEPT WHERE EMP.DEPTNO=DEPT.DEPTNO AND COMM IS NOT NULL AND DEPTNO IN(10,30);
+SELECT  ENAME,DNAME FROM EMP,DEPT WHERE EMP.DEPTNO=DEPT.DEPTNO AND COMM IS NOT NULL AND DEPTNO IN(10,30)
+                                                                                        *
+ERROR at line 1:
+ORA-00918: column ambiguously defined
+
+
+SQL> SELECT  ENAME,DNAME FROM EMP,DEPT WHERE EMP.DEPTNO=DEPT.DEPTNO AND COMM IS NOT NULL AND EMP.DEPTNO IN(10,30);
+
+ENAME      DNAME
+---------- --------------
+ALLEN      SALES
+WARD       SALES
+MARTIN     SALES
+TURNER     SALES
+
+SQL> SELECT DNAME,EMPNO FROM EMP,DEPT WHERE EMP.DEPTNO=DEPT.DEPTNO AND EMPNO IN(7839,7902) AND LOC IN 'NEW YORK';
+
+DNAME               EMPNO
+-------------- ----------
+ACCOUNTING           7839
+
+SQL>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,272 @@
+SQL> create table b_emp
+  2  (
+  3   empid number(3) primary key,
+  4  ename varchar(20),
+  5  sal number(4),
+  6  gmain varchar(7)
+  7  );
+
+Table created.
+
+SQL> create table b_cust
+  2  (
+  3   cid number(5) primary key,
+  4  cname varchar(5),
+  5  phone_num number(10),
+  6  acc_no number(7),
+  7  empid number(3)
+  8  foreign key (empid) reference b_emp (empid)
+  9  );
+foreign key (empid) reference b_emp (empid)
+*
+ERROR at line 8:
+ORA-00907: missing right parenthesis
+
+
+SQL> create table b_cust
+  2  (
+  3   cid number(5) primary key,
+  4  cname varchar(5),
+  5  phone_num number(10),
+  6  acc_no number(7),
+  7  empid number(3)
+  8  foreign key (empid) references b_emp (empid)
+  9  );
+foreign key (empid) references b_emp (empid)
+*
+ERROR at line 8:
+ORA-00907: missing right parenthesis
+
+
+SQL> create table b_cust
+  2  (
+  3   cid number(5) primary key,
+  4  cname varchar(5),
+  5  phone_num number(10),
+  6  acc_no number(7),
+  7  empid number(3)
+  8  ,
+  9  foreign key (empid) references b_emp (empid)
+ 10  );
+
+Table created.
+
+SQL> create table transaction
+  2  (
+  3   urlid varchar(20) primary key,
+  4  tid varchar(20),
+  5  tdate date,
+  6  loc varchar(20),
+  7  cid number(5),
+  8  foreign key (cid) references b_cust (cid)
+  9  );
+
+Table created.
+
+SQL> create table acc_type
+  2  (
+  3   salary varchar(20),
+  4  savings varchar(20),
+  5  current varchar(20),
+  6  joint varchar(20),
+  7  cid number(5),
+  8  foreign key (cid) references b_cust (cid)
+  9  );
+current varchar(20),
+*
+ERROR at line 5:
+ORA-00904: : invalid identifier
+
+
+SQL> create table acc_type
+  2  (
+  3   salary varchar(20),
+  4  savings varchar(20),
+  5  curent varchar(20),
+  6  joint varchar(20),
+  7  cid number(5),
+  8  foreign key (cid) references b_cust (cid)
+  9  );
+
+Table created.
+
+SQL> create table b_branch
+  2  (
+  3   bid varchar(20),
+  4  loc varchar(20),
+  5  ifsc varchar(20),
+  6  pincode number(6),
+  7  empid number(3),
+  8  foreign key (empid) references b_emp (empid;
+foreign key (empid) references b_emp (empid
+                                          *
+ERROR at line 8:
+ORA-00907: missing right parenthesis
+
+
+SQL> create table b_branch
+  2  (
+  3   bid varchar(20) primary key,
+  4  loc varchar(20),
+  5  ifsc varchar(20),
+  6  pincode number(6),
+  7  empid number(3),
+  8  foreign key (empid) references b_emp (empid)
+  9  );
+
+Table created.
+
+SQL> select tab from acc_type;
+select tab from acc_type
+       *
+ERROR at line 1:
+ORA-00904: "TAB": invalid identifier
+
+
+SQL> desc acc_type;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ SALARY                                             VARCHAR2(20)
+ SAVINGS                                            VARCHAR2(20)
+ CURENT                                             VARCHAR2(20)
+ JOINT                                              VARCHAR2(20)
+ CID                                                NUMBER(5)
+
+SQL> create table acc_type1
+  2  (
+  3   salary varchar(20),
+  4  savings varchar(20),
+  5  current varchar(20),
+  6  joint varchar(20),
+  7  cid number(5),
+  8  foreign key (cid) references b_cust (cid)
+  9  urlid varchar(20),
+ 10  foreign key (urlid) references transaction (urlid)
+ 11  );
+current varchar(20),
+*
+ERROR at line 5:
+ORA-00904: : invalid identifier
+
+
+SQL> create table acc_type1
+  2  (
+  3   salary varchar(20),
+  4  savings varchar(20),
+  5  curent varchar(20),
+  6  joint varchar(20),
+  7  cid number(5),
+  8  foreign key (cid) references b_cust (cid)
+  9  urlid varchar(20),
+ 10  foreign key (urlid) references transaction (urlid)
+ 11  );
+urlid varchar(20),
+*
+ERROR at line 9:
+ORA-00907: missing right parenthesis
+
+
+SQL> create table acc_type1
+  2  (
+  3   salary varchar(20),
+  4
+SQL> savings varchar(20),;
+SP2-0734: unknown command beginning "savings va..." - rest of line ignored.
+SQL> create table acc_type1
+  2  (
+  3   salary varchar(20),
+  4  savings varchar(20),
+  5  curent varchar(20),
+  6  joint varchar(20),
+  7  cid number(5),
+  8  foreign key (cid) references b_cust (cid),
+  9  urlid varchar(20),
+ 10  foreign key (urlid) references transaction (urlid)
+ 11  );
+
+Table created.
+
+SQL> select * from tab;
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+ACC_TYPE                       TABLE
+ACC_TYPE1                      TABLE
+BONUS                          TABLE
+B_BRANCH                       TABLE
+B_CUST                         TABLE
+B_EMP                          TABLE
+CHOC                           TABLE
+CUST                           TABLE
+DEPT                           TABLE
+EMP                            TABLE
+PRODUCT                        TABLE
+
+TNAME                          TABTYPE  CLUSTERID
+------------------------------ ------- ----------
+SALGRADE                       TABLE
+TRANSACTION                    TABLE
+
+13 rows selected.
+
+SQL>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

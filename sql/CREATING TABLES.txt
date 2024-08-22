@@ -1,0 +1,37 @@
+SQL>  create table choc
+   2  (
+   3  cid number(4) unique,
+   4  cname varchar(20) not null unique,
+   5  brand varchar(30),
+   6  cost number(9,2) not null
+   7  );
+
+Table created.
+
+SQL> select * from choc;
+
+no rows selected
+
+SQL>  create table product
+  2    (
+  3   pid number(4) primary key,
+  4  pname varchar(20) not null
+  5  ,
+  6  cost number(8,3)
+  7  );
+
+Table created.
+
+
+ESTABLISH CONNECTION BETWEEN TWO TABLES HERE WE ARE CREATING CONNECTION BETWEE PRODUCT AND CUST PID( THE COLUMN NAME AND DATA TYPE SHOULD BE SAME IN BOTH TABLES)
+
+SQL> create table cust
+  2  (
+  3   cid number(3) unique,
+  4  cname varchar(20),
+  5  phone_num number(10) unique check(length(phone_num)=10) not null ,
+  6  pid number(4),
+  7  foreign key (pid) references product (pid)
+  8  );
+
+Table created.

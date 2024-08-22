@@ -1,0 +1,54 @@
+SQL> declare
+  2  v1 varchar(20):='hello';
+  3  begin
+  4  dbms_output.put_line(v1);
+  5  end;
+  6  /
+hello
+
+PL/SQL procedure successfully completed.
+
+SQL> declare
+  2  emp_name varchar(20);
+  3  emp_salary number(9,2);
+  4  begin
+  5  select ename,sal into emp_name,emp_salary
+  6  from emp
+  7  where ename='MILLER';
+  8  dbms_output.put_line(EMP_NAME);
+  9  END;
+ 10  /
+MILLER
+
+PL/SQL procedure successfully completed.
+
+SQL> declare
+  2  emp_name varchar(20);
+  3  emp_salary number(9,2);
+  4  begin
+  5  select ename,sal into emp_name,emp_salary
+  6  from emp
+  7  where ename='MILLER';
+  8  dbms_output.put_line(EMP_SALARY);
+  9  END;
+ 10  /
+1300
+
+PL/SQL procedure successfully completed.
+SQL> DECLARE V1 NUMBER(5); 
+   2 V2 VARCHAR(15); 
+   3 BEGIN SELECT COUNT(*) INTO V1 
+   4 FROM EMP;
+   5 SELECT DNAME INTO V2 
+   6 FROM DEPT 
+   7 WHERE LOCATION='NEW YORK'; 
+   8 DBMS_OUTPUT.PUT_LINE(V1); 
+   9 DBMS_OUTPUT.PUT_LINE(V2);
+  10 END;
+  11 /
+13
+ACCOUNTING
+
+PL/SQL procedure successfully completed.
+
+SQL>

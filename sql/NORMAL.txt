@@ -1,0 +1,23 @@
+
+
+
+
+SQL> select emp.*,sal*12 AS ANNUAL_SAL from emp WHERE SAL*12<18000 AND HIREDATE NOT LIKE '%NOV%' AND COMM IS NOT NULL AND HIREDATE BETWEEN '01-JAN-1970'AND'31-DEC-1990';
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO ANNUAL_SAL
+---------- ---------- --------- ---------- --------- ---------- ---------- ---------- ----------
+      7521 WARD       SALESMAN        7698 22-FEB-81       1250        500         30      15000
+      7654 MARTIN     SALESMAN        7698 28-SEP-81       1250       1400         30      15000
+SQL> SELECT COUNT(*) FROM EMP WHERE SAL>(SELECT SAL FROM EMP WHERE ENAME='MILLER') GROUP BY DEPTNO;
+
+  COUNT(*)
+----------
+         3
+         3
+         2
+SQL> SELECT MAX(SAL),MIN(SAL) FROM EMP WHERE HIREDATE<(SELECT HIREDATE FROM EMP WHERE ENAME='MILLER') AND DEPTNO IN(SELECT DEPTNO FROM DEPT WHERE LOC='NEW YORK') GROUP BY JOB;
+
+  MAX(SAL)   MIN(SAL)
+---------- ----------
+      5000       5000
+      2450       2450

@@ -1,0 +1,352 @@
+SQL> select * from choc;
+
+       CID CNAME                BRAND                                COST
+---------- -------------------- ------------------------------ ----------
+       101 kitkat               nestle                                 10
+       102 milkbar              nestle                                 20
+       103 kissme               parle                                   1
+
+SQL> update choc set cost=15 where cname='kitkat';
+
+1 row updated.
+
+SQL> update choc set cname='kit kat' where cname='kitkat';
+
+1 row updated.
+
+SQL> select * from choc;
+
+       CID CNAME                BRAND                                COST
+---------- -------------------- ------------------------------ ----------
+       101 kit kat              nestle                                 15
+       102 milkbar              nestle                                 20
+       103 kissme               parle                                   1
+
+SQL> update choc set cname='kiss me' where cname='kissme';
+
+1 row updated.
+
+SQL> update choc set cname='milky bar' where cname='milkbar';
+
+1 row updated.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> inset into choc values(104,'5star','cadbury',20);
+SP2-0734: unknown command beginning "inset into..." - rest of line ignored.
+SQL> insert into choc values(104,'5star','cadbury',20);
+
+1 row created.
+
+SQL> select * from choc;
+
+       CID CNAME                BRAND                                COST
+---------- -------------------- ------------------------------ ----------
+       104 5star                cadbury                                20
+       101 kit kat              nestle                                 15
+       102 milky bar            nestle                                 20
+       103 kiss me              parle                                   1
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from choc;
+
+       CID CNAME                BRAND                                COST
+---------- -------------------- ------------------------------ ----------
+       101 kit kat              nestle                                 15
+       102 milky bar            nestle                                 20
+       103 kiss me              parle                                   1
+
+SQL> insert into choc values(104,'5star','cadbury',20);
+
+1 row created.
+
+SQL> insert into choc values(105,'dairy milk','cadbury',180);
+
+1 row created.
+
+SQL> select * from choc;
+
+       CID CNAME                BRAND                                COST
+---------- -------------------- ------------------------------ ----------
+       104 5star                cadbury                                20
+       105 dairy milk           cadbury                               180
+       101 kit kat              nestle                                 15
+       102 milky bar            nestle                                 20
+       103 kiss me              parle                                   1
+
+SQL> rollback;
+
+Rollback complete.
+
+
+
+
+
+SQL> select * from choc;
+
+       CID CNAME                BRAND                                COST
+---------- -------------------- ------------------------------ ----------
+       101 kit kat              nestle                                 15
+       102 milky bar            nestle                                 20
+       103 kiss me              parle                                   1
+
+SQL> insert into choc values(104,'5star','cadbury',20);
+
+1 row created.
+
+SQL> insert into choc values(105,'dairy milk','cadbury',180);
+
+1 row created.
+
+SQL> savepoint s1;
+
+Savepoint created.
+
+SQL>SQL> select * from choc;
+
+       CID CNAME                BRAND                                COST
+---------- -------------------- ------------------------------ ----------
+       101 kit kat              nestle                                 15
+       102 milky bar            nestle                                 20
+       103 kiss me              parle                                   1
+
+SQL> insert into choc values(105,'dairy milk','cadbury',180);
+
+1 row created.
+
+SQL> insert into choc values(104,'5star','cadbury',20);
+
+1 row created.
+
+SQL> select * from choc;
+
+       CID CNAME                BRAND                                COST
+---------- -------------------- ------------------------------ ----------
+       105 dairy milk           cadbury                               180
+       104 5star                cadbury                                20
+       101 kit kat              nestle                                 15
+       102 milky bar            nestle                                 20
+       103 kiss me              parle                                   1
+
+SQL> savepoint s1;
+
+Savepoint created.
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from choc;
+
+       CID CNAME                BRAND                                COST
+---------- -------------------- ------------------------------ ----------
+       101 kit kat              nestle                                 15
+       102 milky bar            nestle                                 20
+       103 kiss me              parle                                   1
+
+SQL> insert into choc values(104,'5star','cadbury',20);
+
+1 row created.
+
+SQL> insert into choc values(105,'dairy milk','cadbury',180);
+
+1 row created.
+
+SQL> select * from choc;
+
+       CID CNAME                BRAND                                COST
+---------- -------------------- ------------------------------ ----------
+       104 5star                cadbury                                20
+       105 dairy milk           cadbury                               180
+       101 kit kat              nestle                                 15
+       102 milky bar            nestle                                 20
+       103 kiss me              parle                                   1
+
+SQL> savepoint s1;
+
+Savepoint created.
+
+SQL> insert into choc values(106,'mellody',null,1);
+
+1 row created.
+
+SQL> insert into choc values(107,'munch','nestle',5);
+
+1 row created.
+
+SQL> select * from choc;
+
+       CID CNAME                BRAND                                COST
+---------- -------------------- ------------------------------ ----------
+       104 5star                cadbury                                20
+       105 dairy milk           cadbury                               180
+       106 mellody                                                      1
+       107 munch                nestle                                  5
+       101 kit kat              nestle                                 15
+       102 milky bar            nestle                                 20
+       103 kiss me              parle                                   1
+
+7 rows selected.
+
+SQL> savepoint s2;
+
+Savepoint created.
+
+SQL> insert into choc values(108,'vicks',null,1);
+
+1 row created.
+
+SQL> insert into choc values(109,'happydent',null,1);
+
+1 row created.
+
+SQL> savepoint s3;
+
+Savepoint created.
+
+SQL> select * from choc;
+
+       CID CNAME                BRAND                                COST
+---------- -------------------- ------------------------------ ----------
+       104 5star                cadbury                                20
+       105 dairy milk           cadbury                               180
+       106 mellody                                                      1
+       107 munch                nestle                                  5
+       108 vicks                                                        1
+       109 happydent                                                    1
+       101 kit kat              nestle                                 15
+       102 milky bar            nestle                                 20
+       103 kiss me              parle                                   1
+
+9 rows selected.
+
+SQL> insert into choc values(110,'gems','cadbury',20);
+
+1 row created.
+
+SQL> select * from choc;
+
+       CID CNAME                BRAND                                COST
+---------- -------------------- ------------------------------ ----------
+       104 5star                cadbury                                20
+       105 dairy milk           cadbury                               180
+       106 mellody                                                      1
+       107 munch                nestle                                  5
+       108 vicks                                                        1
+       109 happydent                                                    1
+       110 gems                 cadbury                                20
+       101 kit kat              nestle                                 15
+       102 milky bar            nestle                                 20
+       103 kiss me              parle                                   1
+
+10 rows selected.
+
+SQL> rollbackto s3;
+SP2-0734: unknown command beginning "rollbackto..." - rest of line ignored.
+SQL> rollback to s3;
+
+Rollback complete.
+
+SQL> select * from choc;
+
+       CID CNAME                BRAND                                COST
+---------- -------------------- ------------------------------ ----------
+       104 5star                cadbury                                20
+       105 dairy milk           cadbury                               180
+       106 mellody                                                      1
+       107 munch                nestle                                  5
+       108 vicks                                                        1
+       109 happydent                                                    1
+       101 kit kat              nestle                                 15
+       102 milky bar            nestle                                 20
+       103 kiss me              parle                                   1
+
+9 rows selected.
+
+SQL> rollback to s1;
+
+Rollback complete.
+
+SQL> select * from choc;
+
+       CID CNAME                BRAND                                COST
+---------- -------------------- ------------------------------ ----------
+       104 5star                cadbury                                20
+       105 dairy milk           cadbury                               180
+       101 kit kat              nestle                                 15
+       102 milky bar            nestle                                 20
+       103 kiss me              parle                                   1
+
+SQL> commit;
+
+Commit complete.
+
+SQL> rollback;
+
+Rollback complete.
+
+SQL> select * from choc;
+
+       CID CNAME                BRAND                                COST
+---------- -------------------- ------------------------------ ----------
+       104 5star                cadbury                                20
+       105 dairy milk           cadbury                               180
+       101 kit kat              nestle                                 15
+       102 milky bar            nestle                                 20
+       103 kiss me              parle                                   1
+
+SQL>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

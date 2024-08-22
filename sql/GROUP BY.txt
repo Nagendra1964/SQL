@@ -1,0 +1,337 @@
+select count(*),deptno from emp
+  2  where job !='Analyst'
+  3  Group by deptno;
+
+  COUNT(*)     DEPTNO
+---------- ----------
+         6         30
+         5         20
+         3         10
+
+SQL> select max(sal)
+  2  from emp
+  3  group by job;
+
+  MAX(SAL)
+----------
+      1300
+      1600
+      5000
+      2975
+      3000
+
+SQL> select count(*),deptno from em
+  2  ;
+select count(*),deptno from em
+                            *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select count(*),deptno
+  2  from emp
+  3  WHERE JOB != 'ANALYST'
+  4  GROUP BY JOB;
+select count(*),deptno
+                *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression
+
+
+SQL> SELECT COUNT(ENAME)
+  2  FROM EMP
+  3  WHERE ENAME LIKE %A%
+  4  GROUP BY JOB;
+WHERE ENAME LIKE %A%
+                 *
+ERROR at line 3:
+ORA-00911: invalid character
+
+
+SQL> SELECT COUNT(ENAME)
+  2  FROM EMP
+  3  WHERE ENAME LIKE '%A%'
+  4  GROUP BY JOB;
+
+COUNT(ENAME)
+------------
+           3
+           2
+           2
+
+SQL> SELECT COUNT(ENAME)
+  2  FROM EMP
+  3  WHERE COMM  NOT NULL
+  4  GROUP BY DEPTNO;
+WHERE COMM  NOT NULL
+                *
+ERROR at line 3:
+ORA-00920: invalid relational operator
+
+
+SQL> SELECT COUNT(ENAME),DEPTNO
+  2  FROM EMP
+  3  WHERE COMM IS NOT NULL
+  4  GROUP BY DEPTNO;
+
+COUNT(ENAME)     DEPTNO
+------------ ----------
+           4         30
+
+SQL> SELECT COUNT(ENAME)
+  2  FROM EMP
+  3  WHERE JOB != 'PRESIDENT'
+  4  GROUP BY DEPTNO;
+
+COUNT(ENAME)
+------------
+           6
+           5
+           2
+
+SQL> SELECT COUNT(ENAME),DEPTNO
+  2  FROM EMP
+  3  WHERE JOB != 'PRESIDENT'
+  4  GROUP BY DEPTNO;
+
+COUNT(ENAME)     DEPTNO
+------------ ----------
+           6         30
+           5         20
+           2         10
+
+SQL> SELECT COUNT(*),JOB
+  2  FROM EMP
+  3  WHERE JOB != 'PRESIDENT';
+SELECT COUNT(*),JOB
+                *
+ERROR at line 1:
+ORA-00937: not a single-group group function
+
+
+SQL> SELECT TOTAL(SAL),JOB
+  2  FROM EMP
+  3  GROUP BY JOB;
+SELECT TOTAL(SAL),JOB
+       *
+ERROR at line 1:
+ORA-00904: "TOTAL": invalid identifier
+
+
+SQL> SELECT SUM(SAL),JOB
+  2  FROM EMP
+  3  GROUP BY JOB;
+
+  SUM(SAL) JOB
+---------- ---------
+      4150 CLERK
+      5600 SALESMAN
+      5000 PRESIDENT
+      8275 MANAGER
+      6000 ANALYST
+
+SQL> SELECT COUNT(ENAME),DEPTNO
+  2  FROM EMP
+  3  WHERE JOB='MANAGER'
+  4  GROUP BY DEPTNO;
+
+COUNT(ENAME)     DEPTNO
+------------ ----------
+           1         30
+           1         20
+           1         10
+
+SQL> SELECT AVG(SAL),DEPTNO
+  2  FROM EMP
+  3  WHERE DEPTNO!=20
+  4  GROUP BY DEPTNO;
+
+  AVG(SAL)     DEPTNO
+---------- ----------
+1566.66667         30
+2916.66667         10
+
+SQL> SELECT COUNT(ENAME),DEPTNO
+  2  FROM EMP
+  3  WHERE JOB!='ANALYST'
+  4  GROUP BY DEPTNO;
+
+COUNT(ENAME)     DEPTNO
+------------ ----------
+           6         30
+           3         20
+           3         10
+
+SQL> SELECT COUNT(*),JOB FROM EMP
+  2  WHERE ENAME LIKE '%A%'
+  3  GROUP BY JOB;
+
+  COUNT(*) JOB
+---------- ---------
+         3 SALESMAN
+         2 CLERK
+         2 MANAGER
+
+SQL> SELECT COUNT(*),AVG(SAL) FROM EMP
+  2  WHERE SAL>2000
+  3  GROUP BY DEPTNO;
+
+  COUNT(*)   AVG(SAL)
+---------- ----------
+         1       2850
+         3 2991.66667
+         2       3725
+
+SQL> SELECT COUNT(*),AVG(SAL),DEPTNO FROM EMP
+  2  WHERE SAL>2000
+  3  GROUP BY DEPTNO;
+
+  COUNT(*)   AVG(SAL)     DEPTNO
+---------- ---------- ----------
+         1       2850         30
+         3 2991.66667         20
+         2       3725         10
+
+SQL> SELECT TOTAL(SAL),COUNT(JOB)
+  2  WHERE JOB = 'SALESMAN'
+  3  GROUP BY DEPTNO;
+WHERE JOB = 'SALESMAN'
+*
+ERROR at line 2:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> SELECT TOTAL(SAL),COUNT(JOB) FROM EMP
+  2  WHERE JOB = 'SALESMAN'
+  3  GROUP BY DEPTNO;
+SELECT TOTAL(SAL),COUNT(JOB) FROM EMP
+       *
+ERROR at line 1:
+ORA-00904: "TOTAL": invalid identifier
+
+
+SQL> SELECT SUM(SAL),COUNT(JOB) FROM EMP
+  2  WHERE JOB = 'SALESMAN'
+  3  GROUP BY DEPTNO;
+
+  SUM(SAL) COUNT(JOB)
+---------- ----------
+      5600          4
+
+SQL> SELECT MAX(SAL),JOB FROM EMP
+  2  GROUP BY JOB;
+
+  MAX(SAL) JOB
+---------- ---------
+      1300 CLERK
+      1600 SALESMAN
+      5000 PRESIDENT
+      2975 MANAGER
+      3000 ANALYST
+
+SQL> SELECT MAX(SAL),JOB ,DEPTNO FROM EMP
+  2  GROUP BY DEPTNO;
+SELECT MAX(SAL),JOB ,DEPTNO FROM EMP
+                *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression
+
+
+SQL> SELECT MAX(SAL),DEPTNO FROM EMP
+  2  GROUP BY DEPTNO;
+
+  MAX(SAL)     DEPTNO
+---------- ----------
+      2850         30
+      3000         20
+      5000         10
+
+SQL> SELECT COUNT(SAL) FROM EMP;
+
+COUNT(SAL)
+----------
+        14
+
+SQL> SELECT COUNT(SAL) FROM EMP
+  2  GROUP BY SAL;
+
+COUNT(SAL)
+----------
+         1
+         1
+         1
+         2
+         1
+         1
+         1
+         2
+         1
+         1
+         1
+         1
+
+12 rows selected.
+
+SQL> SELECT COUNT(SAL),SAL FROM EMP
+  2  GROUP BY SAL;
+
+COUNT(SAL)        SAL
+---------- ----------
+         1       2450
+         1       5000
+         1       1300
+         2       1250
+         1       2850
+         1       2975
+         1       1100
+         2       3000
+         1        800
+         1       1600
+         1       1500
+         1        950
+
+12 rows selected.
+
+SQL>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
